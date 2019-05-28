@@ -82,6 +82,10 @@
     </service>
     <service id="App\Controller\ArticleController" class="App\Controller\ArticleController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
+      <tag name="container.service_subscriber"/>
+      <call method="setContainer">
+        <argument type="service" id=".service_locator.KTVqfp6.App\Controller\ArticleController"/>
+      </call>
     </service>
     <service id="App\Controller\LuckyController" class="App\Controller\LuckyController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
@@ -265,14 +269,6 @@
       </call>
       <call method="addListener">
         <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument type="service" id="debug.debug_handlers_listener"/>
-          <argument>configure</argument>
-        </argument>
-        <argument>2048</argument>
-      </call>
-      <call method="addListener">
-        <argument>console.command</argument>
         <argument type="collection">
           <argument type="service" id="debug.debug_handlers_listener"/>
           <argument>configure</argument>
@@ -1037,7 +1033,9 @@
     <service id="twig" class="Twig\Environment" public="true">
       <argument type="service" id="twig.loader.native_filesystem"/>
       <argument type="collection">
-        <argument key="default_path">/Users/hetic/Documents/SYMFONY/cinoche/templates</argument>
+        <argument key="paths" type="collection">
+          <argument key="/Users/hetic/Documents/SYMFONY/cinoche/templates">null</argument>
+        </argument>
         <argument key="debug">true</argument>
         <argument key="strict_variables">true</argument>
         <argument key="exception_controller">twig.controller.exception::showAction</argument>
@@ -1047,7 +1045,7 @@
         <argument key="autoescape">name</argument>
         <argument key="cache">/Users/hetic/Documents/SYMFONY/cinoche/var/cache/dev/twig</argument>
         <argument key="charset">UTF-8</argument>
-        <argument key="paths" type="collection"/>
+        <argument key="default_path">/Users/hetic/Documents/SYMFONY/cinoche/templates</argument>
         <argument key="date" type="collection">
           <argument key="format">F j, Y H:i</argument>
           <argument key="interval_format">%d days</argument>
@@ -1108,12 +1106,16 @@
       <tag name="container.service_subscriber" id="twig"/>
       <argument type="service" id=".service_locator.lSIKWsr.twig.cache_warmer"/>
       <argument>null</argument>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument key="/Users/hetic/Documents/SYMFONY/cinoche/templates">null</argument>
+      </argument>
     </service>
     <service id="twig.template_iterator" class="Symfony\Bundle\TwigBundle\TemplateIterator" public="false">
       <argument type="service" id="kernel"/>
       <argument>/Users/hetic/Documents/SYMFONY/cinoche/src</argument>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument key="/Users/hetic/Documents/SYMFONY/cinoche/templates">null</argument>
+      </argument>
       <argument>/Users/hetic/Documents/SYMFONY/cinoche/templates</argument>
     </service>
     <service id="twig.template_cache_warmer" class="Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheWarmer" public="false">
@@ -1126,6 +1128,9 @@
       <tag name="twig.loader"/>
       <argument type="collection"/>
       <argument>/Users/hetic/Documents/SYMFONY/cinoche</argument>
+      <call method="addPath">
+        <argument>/Users/hetic/Documents/SYMFONY/cinoche/templates</argument>
+      </call>
       <call method="addPath">
         <argument>/Users/hetic/Documents/SYMFONY/cinoche/vendor/symfony/framework-bundle/Resources/views</argument>
         <argument>Framework</argument>
@@ -1243,6 +1248,9 @@
     </service>
     <service id=".instanceof.Symfony\Component\Console\Command\Command.0.SensioLabs\Security\Command\SecurityCheckerCommand" class="SensioLabs\Security\Command\SecurityCheckerCommand" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.SensioLabs\Security\Command\SecurityCheckerCommand" class="SensioLabs\Security\Command\SecurityCheckerCommand" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ArticleController" class="App\Controller\ArticleController" autowire="true" abstract="true"/>
+    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ArticleController" class="App\Controller\ArticleController" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Controller\ArticleController" class="App\Controller\ArticleController" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.9_yeNH1" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
       <argument type="collection"/>
@@ -1262,6 +1270,23 @@
         <argument key="session" type="service" id="session" on-invalid="ignore"/>
         <argument key="session_storage" type="service" id="session.storage.native" on-invalid="ignore"/>
       </argument>
+    </service>
+    <service id=".service_locator.KTVqfp6" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator"/>
+      <argument type="collection">
+        <argument key="http_kernel" type="service" id="http_kernel" on-invalid="ignore"/>
+        <argument key="parameter_bag" type="service" id="parameter_bag" on-invalid="ignore"/>
+        <argument key="request_stack" type="service" id="request_stack" on-invalid="ignore"/>
+        <argument key="router" type="service" id="router.default" on-invalid="ignore"/>
+        <argument key="session" type="service" id="session" on-invalid="ignore"/>
+        <argument key="twig" type="service" id="twig" on-invalid="ignore"/>
+      </argument>
+    </service>
+    <service id=".service_locator.KTVqfp6.App\Controller\ArticleController" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
+      <tag name="container.service_locator_context" id="App\Controller\ArticleController"/>
+      <argument>App\Controller\ArticleController</argument>
+      <argument type="service" id="service_container"/>
+      <factory service=".service_locator.KTVqfp6" method="withContext"/>
     </service>
     <service id=".service_locator.MAfdX1A" class="Symfony\Component\DependencyInjection\ServiceLocator" public="false">
       <tag name="container.service_locator"/>
