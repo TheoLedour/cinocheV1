@@ -20,6 +20,8 @@ class srcApp_KernelDevDebugContainerUrlGenerator extends Symfony\Component\Routi
         $this->defaultLocale = $defaultLocale;
         if (null === self::$declaredRoutes) {
             self::$declaredRoutes = [
+        'app_lucky_number' => [[], ['_controller' => 'App\\Controller\\LuckyController::number'], [], [['text', '/number']], [], []],
+        'index' => [[], ['_controller' => 'App\\Controller\\ArticleController::homepage'], [], [['text', '/']], [], []],
     ];
         }
     }
