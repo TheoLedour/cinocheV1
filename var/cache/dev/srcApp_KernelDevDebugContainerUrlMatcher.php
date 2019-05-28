@@ -20,11 +20,13 @@ class srcApp_KernelDevDebugContainerUrlMatcher extends Symfony\Bundle\FrameworkB
         ];
         $this->regexpList = [
             0 => '{^(?'
-                    .'|/news/([^/]++)(*:21)'
+                    .'|/_error/(\\d+)(?:\\.([^/]++))?(*:35)'
+                    .'|/news/([^/]++)(*:56)'
                 .')/?$}sDu',
         ];
         $this->dynamicRoutes = [
-            21 => [[['_route' => 'app_article_show', '_controller' => 'App\\Controller\\ArticleController::show'], ['slug'], null, null, false, true, null]],
+            35 => [[['_route' => '_twig_error_test', '_controller' => 'twig.controller.preview_error::previewErrorPageAction', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
+            56 => [[['_route' => 'app_article_show', '_controller' => 'App\\Controller\\ArticleController::show'], ['slug'], null, null, false, true, null]],
         ];
     }
 }
